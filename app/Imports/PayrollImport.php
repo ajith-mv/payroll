@@ -240,10 +240,10 @@ class PayrollImport implements ToCollection,WithHeadingRow
                                             'reference_id' => 1,
                                             'short_name' => $eitem->short_name,
                                             'staff_salary_id'=>$sallary_f_id->id,
-                                            'amount' => round($M_amount),
+                                            'amount' => round((float)$M_amount),
                                             
                                         ];
-                                        $total_earnings +=round($M_amount);
+                                        $total_earnings +=round((float)$M_amount);
                                        }
                                 
                                 StaffSalaryField::updateOrCreate($used_fields,['staff_id'=>$staff_id,'staff_salary_id'=>$sallary_f_id->id,'field_id'=> $eitem->id]);
@@ -298,9 +298,9 @@ class PayrollImport implements ToCollection,WithHeadingRow
                                             'reference_id' => 1,
                                             'short_name' => $sitem->short_name,
                                             'staff_salary_id'=>$sallary_f_id->id,
-                                            'amount' => round($D_amount),
+                                            'amount' => round((float)$D_amount),
                                         ];
-                                        $total_deductions +=round($D_amount);
+                                        $total_deductions +=round((float)$D_amount);
                                        }else{
                                         switch (strtolower(trim($sitem->short_name))) {
                                             case 'contri':
@@ -448,18 +448,18 @@ class PayrollImport implements ToCollection,WithHeadingRow
                                         'reference_id' => 2,
                                         'short_name' => $sitem->short_name,
                                         'staff_salary_id'=>$sallary_f_id->id,
-                                        'amount'=> round($deduct_amount)
+                                        'amount'=>round((float)$deduct_amount)
                                     ];
-                                    $total_deductions +=round($deduct_amount);
+                                    $total_deductions +=round((float)$deduct_amount);
                                 }
                                     StaffSalaryField::updateOrCreate($tmp,['staff_id'=>$staff_id,'staff_salary_id'=>$sallary_f_id->id,'field_id'=> $sitem->id]);
                                 }
                             }
                             
-                            $sallary_f_id->total_earnings = round($total_earnings);
-                            $sallary_f_id->total_deductions = round($total_deductions);
-                            $sallary_f_id->gross_salary = round($total_earnings);
-                            $sallary_f_id->net_salary= round($total_earnings) - round($total_deductions);
+                            $sallary_f_id->total_earnings = round((float)$total_earnings);
+                            $sallary_f_id->total_deductions = round((float)$total_deductions);
+                            $sallary_f_id->gross_salary = round((float)$total_earnings);
+                            $sallary_f_id->net_salary= round((float)$total_earnings) - round((float)$total_deductions);
                             $sallary_f_id->update();
                           
                         }
